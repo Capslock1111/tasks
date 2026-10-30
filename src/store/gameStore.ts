@@ -26,6 +26,8 @@ interface GameState {
     addTask: (title: string, xp: number, date: string) => void;
     removeTask: (id: number) => void;
     toggleTask: (id: number) => void;
+    clearTasks: () => void;
+
 
 }
 
@@ -94,7 +96,11 @@ export const useGameStore = create<GameState>()(
                 const newXP = get().totalXP;
                 if (newXP >= 10) get().unlockAchievement('first-xp');
                 if (newXP >= 100) get().unlockAchievement('level-2');
-            }
+            },
+            clearTasks: () =>
+                set((state) => ({
+                    tasks: [],
+                })),
         }),
         { name: "levelup-storage" }
     )

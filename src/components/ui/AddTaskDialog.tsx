@@ -9,12 +9,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DatePicker } from "./DatePicker";
 
 interface AddTaskDialogProps {
     selectedDate: string;
 }
 
-export function AddTaskDialog({ selectedDate }: AddTaskDialogProps) {
+export function AddTaskDialog({ }: AddTaskDialogProps) {
     const [open, setOpen] = useState(false);
     const [title, setTitle] = useState('');
     const [xp, setXp] = useState(10);
@@ -28,7 +29,14 @@ export function AddTaskDialog({ selectedDate }: AddTaskDialogProps) {
         setTitle('');
         setXp(10);
         setOpen(false);
+        setSelectedDate(today)
     };
+
+    const [selectedDate, setSelectedDate] = useState(
+        new Date().toISOString().split("T")[0]
+    );
+    const today = new Date().toISOString().split("T")[0];
+    //   const tasksForDate = tasks.filter((t) => t.date === selectedDate);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -58,7 +66,13 @@ export function AddTaskDialog({ selectedDate }: AddTaskDialogProps) {
                             max={100}
                         />
                     </div>
-                    <Button type="submit" className="w-full">
+                    <div className="mb-4">
+                        <label className="text-sm text-slate-400 block mb-1">
+                            Дата задачи
+                        </label>
+                        <DatePicker value={selectedDate} onChange={setSelectedDate} />
+                    </div>
+                    <Button type="submit" className="w-full" >
                         Добавить
                     </Button>
                 </form>

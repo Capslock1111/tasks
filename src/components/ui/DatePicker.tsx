@@ -7,7 +7,6 @@ interface DatePickerProps {
 
 export function DatePicker({ value, onChange }: DatePickerProps) {
     const today = new Date().toISOString().split("T")[0];
-
     const shift = (days: number) => {
         const d = new Date(value);
         d.setDate(d.getDate() + days);
@@ -39,3 +38,4 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
         </div>
     );
 }
+

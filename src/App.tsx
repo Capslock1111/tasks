@@ -17,16 +17,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DatePicker } from "./components/ui/DatePicker";
+// import { DatePicker } from "./components/ui/DatePicker";
 
 function App() {
-  const { tasks, totalXP, completeTask, removeTask, toggleTask, achievements } = useGameStore();
+  const { tasks, totalXP, completeTask, clearTasks, removeTask, toggleTask, achievements } = useGameStore();
 
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
 
-  const tasksForDate = tasks.filter((t) => t.date === selectedDate);
+  // const tasksForDate = tasks.filter((t) => t.date === selectedDate);
 
   const level = Math.floor(totalXP / 100) + 1;
   const progressXP = totalXP % 100;
@@ -61,14 +61,34 @@ function App() {
           </p>
         </header>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <DatePicker value={selectedDate} onChange={setSelectedDate} />
-        </div>
+        </div> */}
 
         {/* Задания */}
         <section>
           <h2 className="text-xl font-bold mb-4">Задания на сегодня</h2>
           <AddTaskDialog selectedDate={selectedDate} />
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button>Очистить все задачи</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Удалить все задачи?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Все задачи будут удалены. Это действие нельзя отменить.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Отмена</AlertDialogCancel>
+                <AlertDialogAction onClick={() => clearTasks()}>
+                  Удалить
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <div className="space-y-3">
             {tasks.map((task) => (
               <Card key={task.id} className="p-4 bg-slate-800 border-slate-700 flex items-center justify-between">
